@@ -1,2 +1,10 @@
 node_modules
 yarn-error.log
+
+# hide build directories
+dist
+public/js
+
+# STASH things here, should be 
+#  deleted ultimately.
+src/client/css/canvas-bubbles.css
