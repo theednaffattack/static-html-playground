@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/text-animation-basics", (req, res) => {
-  res.render("index.html");
+  res.render("text-animation-basics.html");
 });
 
 app.listen(port, () => {
