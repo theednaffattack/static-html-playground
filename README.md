@@ -1,6 +1,6 @@
 # Vanilla Playground
 
-This repo is a vanilla repository to get up and running
+This repository is a quick shortcut to get up and running
 with vanilla JS, HTML, and CSS projects with no fuss.
 
 ##Built With:
