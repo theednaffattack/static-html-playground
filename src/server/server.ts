@@ -45,6 +45,10 @@ app.get("/", (req, res) => {
   res.render("index.html");
 });
 
+app.get("/text-animation-basics", (req, res) => {
+  res.render("index.html");
+});
+
 app.listen(port, () => {
   console.log(`\n\nYour app is listening at:\n` + address + "\n\n");
 });
