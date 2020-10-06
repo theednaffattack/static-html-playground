@@ -53,6 +53,16 @@ app.get("/particle-text", (req, res) => {
   res.render("particle-text.html");
 });
 
+// connected-particle-text
+app.get("/connected-particle-text", (req, res) => {
+  res.render("connected-particle-text.html");
+});
+
+// liquid-bubbles
+app.get("/liquid-bubbles", (req, res) => {
+  res.render("liquid-bubbles.html");
+});
+
 app.listen(port, () => {
   console.log(`\n\nYour app is listening at:\n` + address + "\n\n");
 });
