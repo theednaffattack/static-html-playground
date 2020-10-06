@@ -76,10 +76,31 @@ if (ctx) {
         deltaY = mouse.y - this.y;
         // re-watch: https://youtu.be/XGioNBHrFU4?list=PLYElE_rzEw_siuo-kkHh5h7Sk--6IPYNh&t=1375
         let distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        if (distance < 500) {
-          this.size = 50;
+
+        let forceDirectionX = deltaX / distance;
+        let forceDirectionY = deltaY / distance;
+        let maxDistance = mouse.radius;
+
+        // convert number to a value between 1 and 0.
+        let force = (maxDistance - distance) / maxDistance;
+        let directionX = forceDirectionX * force * this.density;
+        let directionY = forceDirectionY * force * this.density;
+
+        if (distance < mouse.radius) {
+          // this.size = 50;
+          this.x -= directionX;
+          this.y -= directionY;
         } else {
-          this.size = 3;
+          // this.size = 3;
+          // Return particles to their original position.
+          if (this.x !== this.baseX) {
+            let xPosDeltaFromOriginalPos = this.x - this.baseX;
+            this.x -= xPosDeltaFromOriginalPos / 10;
+          }
+          if (this.y !== this.baseY) {
+            let yPosDeltaFromOriginalPos = this.y - this.baseY;
+            this.y -= yPosDeltaFromOriginalPos / 10;
+          }
         }
       }
     }
