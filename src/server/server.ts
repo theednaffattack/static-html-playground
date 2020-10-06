@@ -49,6 +49,10 @@ app.get("/text-animation-basics", (req, res) => {
   res.render("text-animation-basics.html");
 });
 
+app.get("/particle-text", (req, res) => {
+  res.render("particle-text.html");
+});
+
 app.listen(port, () => {
   console.log(`\n\nYour app is listening at:\n` + address + "\n\n");
 });
