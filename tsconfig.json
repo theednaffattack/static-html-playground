@@ -8,5 +8,5 @@
     "esModuleInterop": true,
     "strict": true
   },
-  "exclude": ["./src/client"]
+  "exclude": ["./src/client", "node_modules"]
 }
