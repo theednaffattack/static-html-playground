@@ -146,13 +146,13 @@ if (ctx) {
       // outer loop
     }
 
-    // loop through a random number and
-    // create Particles
-    for (let index = 0; index < 500; index++) {
-      let x = Math.random() * canvas.width;
-      let y = Math.random() * canvas.height;
-      particleArray.push(new Particle(x, y));
-    }
+    // // loop through a random number and
+    // // create Particles
+    // for (let index = 0; index < 500; index++) {
+    //   let x = Math.random() * canvas.width;
+    //   let y = Math.random() * canvas.height;
+    //   particleArray.push(new Particle(x, y));
+    // }
   }
 
   function animate() {
