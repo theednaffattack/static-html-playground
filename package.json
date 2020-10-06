@@ -19,7 +19,7 @@
     "start": "yarn clean && yarn build && yarn build-client && yarn copy-files && node dist/server.js",
     "dev": "nodemon --exec ts-node src/server.ts",
     "build": "yarn clean && tsc -p ./ ",
-    "build-client": "tsc -p ./src/client",
+    "build-client": "tsc -p ./src/client && yarn copy-files",
     "clean": "rimraf ./dist",
     "copy-files": "copyfiles -u 3 src/client/css/*.css public/css/",
     "lint": "eslint . --ext .ts",
