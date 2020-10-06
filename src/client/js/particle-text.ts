@@ -37,7 +37,7 @@ if (ctx) {
   // ctx.strokeStyle = "white";
   // ctx.strokeRect(0, 0, 100, 100);
 
-  const data = ctx.getImageData(0, 0, 100, 100);
+  const textCoordinates = ctx.getImageData(0, 0, 100, 100);
 
   class Particle {
     x: number;
