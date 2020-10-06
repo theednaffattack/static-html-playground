@@ -1,37 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Canvas Tutorial</title>
-    <link rel="stylesheet" href="css/canvas-bubbles.css" />
+    <title>Static Playground</title>
   </head>
 
   <body>
-    <h1>Canvas demo</h1>
-    <a
-      target="_blank"
-      href="https://www.youtube.com/watch?v=5575fjFzPT0&t=1087s&ab_channel=Frankslaboratory"
-      >Frank's lab demo</a
-    >
-    <canvas id="canvasbg"></canvas>
-    <canvas id="canvasfg"></canvas>
-    <script src="js/canvas-bubbles.js"></script>
-
-    <footer>
-      <span>Footer text here</span>
-    </footer>
-    <svg>
-      <defs>
-        <filter id="goo">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-          <feColorMatrix
-            in="blur"
-            mode="matrix"
-            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
-            result="goo"
-          />
-          <feBlend in="SourceGraphic" in2="goo" />
-        </filter>
-      </defs>
-    </svg>
+    <main>
+      <h1>Directory</h1>
+      <ul id="directory-items"></ul>
+    </main>
+    <script src="js/home-directory.js"></script>
   </body>
 </html>
