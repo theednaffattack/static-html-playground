@@ -63,6 +63,11 @@ app.get("/liquid-bubbles", (req, res) => {
   res.render("liquid-bubbles.html");
 });
 
+// bubble-text route (bubble-particle-text source file naming used)
+app.get("/bubble-text", (req, res) => {
+  res.render("bubble-text.html");
+});
+
 app.listen(port, () => {
   console.log(`\n\nYour app is listening at:\n` + address + "\n\n");
 });

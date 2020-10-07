@@ -1,8 +1,17 @@
 // tutorial "Vanilla JavaScript Animation Tutorial [Particles & Physics effect]"
 // from: https://www.youtube.com/watch?v=XGioNBHrFU4&list=PLYElE_rzEw_siuo-kkHh5h7Sk--6IPYNh&index=7&ab_channel=Frankslaboratory
 
-const canvas = document.getElementById("particle-canvas") as HTMLCanvasElement;
+const canvas = document.getElementById("bubble-text") as HTMLCanvasElement;
+console.log("CAN WE SEE CANVAS?", canvas);
+
+// let ctx: CanvasRenderingContext2D | null;
+
 const ctx = canvas.getContext("2d");
+
+if (!ctx) {
+  throw new Error("Could not find context.");
+}
+
 // Using window height and width failed on mobile,
 // so I'm going with the fix suggested below.
 // https://stackoverflow.com/a/54812656/9448010
@@ -15,8 +24,8 @@ type pos = number;
 type Y_Pos = number;
 
 type MouseHandler = {
-  x: number | null;
-  y: number | null;
+  x: number;
+  y: number;
   radius: number;
 };
 
@@ -24,15 +33,15 @@ let particleArray: any[] = [];
 
 // handle mouse
 const mouse: MouseHandler = {
-  x: null,
-  y: null,
-  radius: 150,
+  x: -1,
+  y: -1,
+  radius: 0,
 };
 
 window.addEventListener("mousemove", function (event) {
   mouse.x = event.x;
   mouse.y = event.y;
-  mouse.radius = 150;
+  mouse.radius = 0;
 });
 
 let textCoordinates: ImageData;
@@ -43,6 +52,7 @@ class Particle {
   size: number;
   baseX: number;
   baseY: number;
+  distance: number;
   density: number;
   constructor(x: number, y: number) {
     this.x = x + 100;
@@ -50,17 +60,38 @@ class Particle {
     this.size = 3;
     this.baseX = this.x;
     this.baseY = this.y;
-    this.density = Math.random() * 30 + 50;
+    this.distance = 0;
+    this.density = Math.random() * 30 + 10;
   }
   draw() {
     if (ctx) {
-      ctx.fillStyle = "red";
+      ctx.fillStyle = "rgba(255,255,255,0.8)";
+      ctx.strokeStyle = "rgba(34,147,214,0.8)";
       ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+
+      if (this.distance < mouse.radius - 5) {
+        this.size = 13;
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.beginPath();
+      }
+      if (this.distance <= mouse.radius) {
+        this.size = 10;
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.beginPath();
+      } else {
+        this.size = 8;
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.beginPath();
+      }
+
       ctx.closePath();
       ctx.fill();
-    } else {
-      throw new Error("Cannot construct a Particle instance with a context.");
     }
   }
   /** The update function...
@@ -70,36 +101,75 @@ class Particle {
   update() {
     let deltaX;
     let deltaY;
-    if (mouse.x && mouse.y) {
-      deltaX = mouse.x - this.x;
-      deltaY = mouse.y - this.y;
-      // re-watch: https://youtu.be/XGioNBHrFU4?list=PLYElE_rzEw_siuo-kkHh5h7Sk--6IPYNh&t=1375
-      let distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    console.log("MOUSE STUFF", mouse);
+    deltaX = mouse.x - this.x;
 
-      let forceDirectionX = deltaX / distance;
-      let forceDirectionY = deltaY / distance;
-      let maxDistance = mouse.radius;
+    deltaY = mouse.y - this.y;
+    // re-watch: https://youtu.be/XGioNBHrFU4?list=PLYElE_rzEw_siuo-kkHh5h7Sk--6IPYNh&t=1375
+    let distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-      // convert number to a value between 1 and 0.
-      let force = (maxDistance - distance) / maxDistance;
-      let directionX = forceDirectionX * force * this.density;
-      let directionY = forceDirectionY * force * this.density;
+    this.distance = distance;
 
-      if (distance < mouse.radius) {
-        // this.size = 50;
-        this.x -= directionX;
-        this.y -= directionY;
-      } else {
-        // this.size = 3;
-        // Return particles to their original position.
-        if (this.x !== this.baseX) {
-          let xPosDeltaFromOriginalPos = this.x - this.baseX;
-          this.x -= xPosDeltaFromOriginalPos / 10;
-        }
-        if (this.y !== this.baseY) {
-          let yPosDeltaFromOriginalPos = this.y - this.baseY;
-          this.y -= yPosDeltaFromOriginalPos / 10;
-        }
+    let forceDirectionX = deltaX / distance;
+    let forceDirectionY = deltaY / distance;
+    let maxDistance = mouse.radius;
+
+    // convert number to a value between 1 and 0.
+    let force = (maxDistance - distance) / maxDistance;
+    let directionX = forceDirectionX * force * this.density;
+    let directionY = forceDirectionY * force * this.density;
+
+    if (distance < mouse.radius) {
+      // this.size = 50;
+      this.x -= directionX;
+      this.y -= directionY;
+    } else {
+      // this.size = 3;
+      // Return particles to their original position.
+      if (this.x !== this.baseX) {
+        let xPosDeltaFromOriginalPos = this.x - this.baseX;
+        this.x -= xPosDeltaFromOriginalPos / 10;
+      }
+      if (this.y !== this.baseY) {
+        let yPosDeltaFromOriginalPos = this.y - this.baseY;
+        this.y -= yPosDeltaFromOriginalPos / 10;
+      }
+    }
+  }
+}
+
+function connect() {
+  let opacityValue = 1;
+  for (
+    let outerLoopIdx = 0;
+    outerLoopIdx < particleArray.length;
+    outerLoopIdx++
+  ) {
+    for (
+      let innerLoopIdx = outerLoopIdx;
+      innerLoopIdx < particleArray.length;
+      innerLoopIdx++
+    ) {
+      let dx = particleArray[outerLoopIdx].x - particleArray[innerLoopIdx].x;
+      let dy = particleArray[outerLoopIdx].y - particleArray[innerLoopIdx].y;
+      let distance = Math.sqrt(dx * dx + dy * dy);
+
+      opacityValue = 1 - distance / 50;
+
+      if (ctx && distance < 50) {
+        opacityValue = 1 - distance / 50;
+        ctx.strokeStyle = `rgba(255,255,255, ${opacityValue})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(
+          particleArray[outerLoopIdx].x,
+          particleArray[outerLoopIdx].y
+        );
+        ctx.lineTo(
+          particleArray[innerLoopIdx].x,
+          particleArray[innerLoopIdx].y
+        );
+        ctx.stroke();
       }
     }
   }
@@ -114,9 +184,6 @@ if (ctx) {
 
   textCoordinates = ctx.getImageData(0, 0, 100, 100);
   function init() {
-    console.log("THE HELL??????", textCoordinates);
-    console.log("WHAT IS TEXT COORDINATES?", textCoordinates);
-
     particleArray = [];
 
     // Watch the video in the commented link below to explain what's
@@ -167,6 +234,7 @@ if (ctx) {
     }
 
     // Recurse one frame at a time
+    // connect();
     requestAnimationFrame(animate);
   }
   init();

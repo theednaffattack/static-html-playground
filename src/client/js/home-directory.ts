@@ -1,10 +1,10 @@
 const directory = [
   {
-    href: "connected-particle-text",
+    href: "bubble-text",
     order: 1,
   },
   {
-    href: "particle-text",
+    href: "connected-particle-text",
     order: 2,
   },
 
@@ -16,6 +16,10 @@ const directory = [
   {
     href: "text-animation-basics",
     order: 4,
+  },
+  {
+    href: "particle-text",
+    order: 5,
   },
 ];
 
