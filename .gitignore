@@ -8,3 +8,6 @@ public/js
 # STASH things here, should be 
 #  deleted ultimately.
 src/client/css/canvas-bubbles.css
+
+# Hide environment variables
+.env
