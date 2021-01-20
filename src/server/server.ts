@@ -4,7 +4,7 @@ import colors from "colors";
 import path from "path";
 import { renderFile } from "ejs";
 
-const port = 8080;
+const port = process.env.VIRTUAL_PORT;
 const address = colors.green(`http://${netIp().en0}:${port}!`);
 
 // from: https://stackoverflow.com/a/8440736/9448010
