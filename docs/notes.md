@@ -9,28 +9,30 @@
 
 ### Build locally
 
-`docker build -t theednaffattack/pg-server:init .`
+`docker build -t theednaffattack/static:init .`
 
 ### Run locally
 
-`docker run --rm pg-server`
+`docker run --rm static`
 
 ### Build and push to Docker Registry
 
-build: `docker build -t theednaffattack/pg-server:init .`
+build: `docker build -t theednaffattack/static:init .`
 
-push: `docker push theednaffattack/pg-server`
+push: `docker push theednaffattack/static`
 
-combined: `docker build -t theednaffattack/pg-server:init . && docker push theednaffattack/pg-server`
+docker build -t theednaffattack/travel-server:init . && docker push theednaffattack/travel-server
+
+combined: `docker build -t theednaffattack/static:init . && docker push theednaffattack/static`
 
 ### Build and Run locally
 
-`docker build -t theednaffattack/pg-server:init . && docker run --rm `
+`docker build -t theednaffattack/static:init . && docker run --rm `
 
 ### Pull down built images from Docker Registry (from prod server)
 
-docker-compose pull && docker-compose up
+`docker-compose pull && docker-compose up`
 
 ### Find images
 
-`docker images | grep "pg-server"`
+`docker images | grep "static"`
