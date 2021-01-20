@@ -11,3 +11,6 @@ src/client/css/canvas-bubbles.css
 
 # Hide environment variables
 .env
+deploy.sh
+deploy-sc.sh
+deploy-scapi.sh
